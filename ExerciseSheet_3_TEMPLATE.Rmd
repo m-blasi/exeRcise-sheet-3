@@ -262,7 +262,21 @@ e)  Use R to answer your chosen question. Please limit your analysis to
     the functions and techniques we have covered so far in the course.
     You are **not expected** to use advanced statistical models or
     external packages which haven't been introduced.
+    
+```{r, warning=FALSE}
+model1 <- lm(CO2.emissions.per.capita ~ Population.density, data=co2_cities)
 
+library(easystats)
+report(model1) %>% summary()
+```
+
+```{r}
+model2 <-lm(CO2.emissions.per.capita ~ Population.density + Transport.emissions.per.capita..tCO2. + Waste.emissions.per.capita, data = co2_cities)
+            
+report(model2) %>% summary()
+```
+
+The two linear regression models show that there is no significant relationship between population density and CO2 emissions per capita, which indicates that, at least for the given cities, it is not the case that per-capita-emissions rise (or fall) the more dense a city is. Rather, as model 2 shows, it seems to be the case the per-capita-emissions are driven by industry emissions irrespective of the population density.
 
 
 f)  Create a meaningful plot / figure with the dataset. Make sure to
