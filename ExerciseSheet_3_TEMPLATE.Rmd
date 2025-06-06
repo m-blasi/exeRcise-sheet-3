@@ -283,7 +283,64 @@ f)  Create a meaningful plot / figure with the dataset. Make sure to
     provide a figure caption (via the chunk options / Rmarkdown) and
     correctly label the figure.
 
-## Final Note
+```{r}
+#Manually linking cities with their respective continents
 
-Make sure to push all your commits and changes to GitHub before
-submitting the exercise sheet.
+library(tibble)
+
+city_lookup <- tibble(
+  Entity = c(
+    "Accra", "Amman", "Amsterdam", "Athens", "Auckland", "Austin", "Bangkok", "Barcelona",
+    "Basel", "Boston", "Buenos Aires", "Cape Town", "Chennai", "Chicago", "Ciudad de Mexico",
+    "Copenhagen", "Curitiba", "Dubai", "Durban", "Heidelberg", "Hong Kong", "Houston",
+    "Istanbul", "Johannesburg", "Lagos", "Lima", "London", "Los Angeles", "Madrid", "Medellin",
+    "Melbourne", "Milan", "Montreal", "New Orleans", "New York City", "Oslo", "Paris",
+    "Philadelphia", "Portland", "Quito", "Salvador", "San Francisco", "Seoul", "Stockholm",
+    "Sydney", "Tokyo", "Toronto", "Tshwane", "Vancouver", "Venice", "Warsaw", "Washington, DC",
+    "Yokohama"
+  ),
+  Continent = c(
+    "Africa", "Asia", "Europe", "Europe", "Oceania", "North America", "Asia", "Europe",
+    "Europe", "North America", "South America", "Africa", "Asia", "North America", "North America",
+    "Europe", "South America", "Asia", "Africa", "Europe", "Asia", "North America",
+    "Europe", "Africa", "Africa", "South America", "Europe", "North America", "Europe", "South America",
+    "Oceania", "Europe", "North America", "North America", "North America", "Europe", "Europe",
+    "North America", "North America", "South America", "South America", "North America", "Asia", "Europe",
+    "Oceania", "Asia", "North America", "Africa", "North America", "Europe", "Europe", "North America",
+    "Asia"
+  )
+)
+
+```
+
+```{r}
+co2_cities <- co2_cities %>%
+  left_join(city_lookup, by = "Entity") 
+```
+
+```{r}
+ggplot(co2_cities, aes(x = Population.density, y = CO2.emissions.per.capita)) +
+  geom_point(color = "steelblue", size = 2) +
+  facet_wrap(~ Continent, scales = "free") +
+  labs(
+    title = "CO2 Emissions per Capita vs. Population Density",
+    subtitle = "Faceted by Continent",
+    x = "Population Density (people per km²)",
+    y = "CO2 Emissions per Capita (tCO₂)",
+    caption = "Source: OWID – CO2 Emissions by City (C40 Cities, 2018)"
+  ) +
+  theme_minimal() +
+  theme(
+    strip.text = element_text(face = "bold"),
+    plot.title = element_text(size = 14, face = "bold"),
+    plot.caption = element_text(size = 8, color = "gray40")
+  )
+```
+
+To visually inspect why the regression results for the relationship of per-capita-emissions of CO2 and the population density of cities came out as small and insignifcant, I am plotting the relationship facetted for continent groups. 
+
+Although one should be cautious given that the sample size is already small and the continent groups contain even lesser cities, the picture seems to differ slightly depending on the continent. 
+
+In African cities there seems to be a negative relationship between CO2 per capita and population density. This could be explain, potentially, by different development states of the cities. Some cities may be large but not have a lot of heavy industry and some cities may be less dense (due to big areas of land) and yet have a lot of industry. For Asia, Europe and South America, except for one outlier each, the plot shows virtually no relationship. Oeciania has to be diregarded as only three cities are in that group. North America shows a more interesting pattern, as the relationship appears to be negative. This is slightly more substantial because this group has several cities.
+
+Overall, the plot confirms the regression results. There does not seem to be a significant relationship between CO2 emissions per capita and population density. This yields the insight that one should, likely, rather study industry activity to gain insight on emission patterns on the city level.
