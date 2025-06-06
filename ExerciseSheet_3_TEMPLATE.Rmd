@@ -103,6 +103,43 @@ b)  Inspect the film titles manually. Which films form a film series? A
     e.g. "Despicable Me" and "Despicable Me 2". Create a dataframe which
     displays a list of the different series with the titles of the films
     and how many films belong to the series. Output the dataframe.
+    
+```{r}
+table(pixar_films$film)
+```
+
+Manual Inspection: Five film series can be identified based on the tile similarities: Toy story (1-4), Cars (1-3), Finding Nemo (& Dory), The Incredibles (1 and 2), and Monsters (University and Inc).
+
+```{r}
+# Add a new column 'series' manually based on title keywords
+pixar_films$series <- NA  # default to NA
+
+pixar_films$series[grepl("Toy Story", pixar_films$film)] <- "Toy Story"
+pixar_films$series[grepl("Cars", pixar_films$film)] <- "Cars"
+pixar_films$series[grepl("Finding", pixar_films$film)] <- "Finding"
+pixar_films$series[grepl("Incredibles", pixar_films$film)] <- "Incredibles"
+pixar_films$series[grepl("Monsters", pixar_films$film)] <- "Monsters"
+
+# Filter only rows that are part of a series
+series_films <- subset(pixar_films, !is.na(series))
+```
+
+```{r}
+library(dplyr)
+
+series_summary <- series_films %>%
+  group_by(series) %>%
+  summarise(
+    film_titles = paste(film, collapse = "; "),
+    num_films = n()
+  ) %>%
+  arrange(desc(num_films))
+
+# Output the result
+print(series_summary)
+
+```
+
 
 c)  Load the `public_response` dataframe into R. Convert the
     `cinema_score` variable into a factor while ensuring the factor
