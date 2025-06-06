@@ -244,9 +244,9 @@ head(co2_cities)
 
 c)  Put the name / title of the dataset and a link to it below.
 
+- Dataset Name: CO2 emissions by city — C40 Cities (2018)  
+- Link: <https://github.com/owid/owid-datasets/tree/master/datasets/CO2%20emissions%20by%20city%20-%20C40%20Cities%20(2018)>
 
-- Dataset Name: ...
-- Link: <https://github.com/owid/owid-datasets/>...
 
 
 d)  Come up with a (research) question you want to answer with the data
