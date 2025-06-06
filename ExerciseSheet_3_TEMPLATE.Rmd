@@ -19,11 +19,11 @@ d)  Name 2 strengths and 2 weaknesses of git. (Don't forget to create a
 
 **Weaknesses**
 1. Git can be a bit complicated to use
-2. Git does not track changes (to e.g. code files) automatically but has to be used explicitely
+2. Git does not track changes (to e.g. code files) automatically but has to be used explicitly
 
 
 e)  Knit this exercise sheet. Some new files will automatically be
-    generated when knitting the sheet e.g. the HTML page. Ignore these
+    generated when knitting the sheet e.g.the HTML page. Ignore these
     files, as we only want to track the source files themselves. You
     can, but don't need to create a `.gitignore` file. Just do not
     commit these files manually.
