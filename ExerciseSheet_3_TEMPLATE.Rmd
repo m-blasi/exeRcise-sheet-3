@@ -228,10 +228,26 @@ a)  Go to <https://github.com/owid/owid-datasets/tree/master/datasets>
     and choose a dataset that interests you. You can have a look at
     <https://ourworldindata.org/> to gather some inspiration.
 b)  Download the dataset and track it in git.
+
+```{r}
+download.file(
+  url = "https://raw.githubusercontent.com/owid/owid-datasets/master/datasets/CO2%20emissions%20by%20city%20-%20C40%20Cities%20(2018)/CO2%20emissions%20by%20city%20-%20C40%20Cities%20(2018).csv",
+  destfile = "co2_emissions_cities.csv",
+  mode = "wb"
+)
+
+co2_cities <- read.csv("co2_emissions_cities.csv")
+
+head(co2_cities)
+```
+
+
 c)  Put the name / title of the dataset and a link to it below.
 
--   Dataset Name: ...
--   Link: <https://github.com/owid/owid-datasets/>...
+
+- Dataset Name: ...
+- Link: <https://github.com/owid/owid-datasets/>...
+
 
 d)  Come up with a (research) question you want to answer with the data
     and briefly explain why you believe this is an interesting question
