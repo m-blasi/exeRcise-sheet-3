@@ -182,6 +182,40 @@ d)  Choose one of the variables representing the public response and
     What do you notice when comparing the scores of the films in a
     series? Do you see any patterns?
 
+```{r}
+library(ggplot2)
+library(forcats)
+
+# Filter films that are part of a series and have Rotten Tomatoes score
+series_films_plot <- pixar_combined %>%
+  filter(!is.na(series), !is.na(rotten_tomatoes)) %>%
+  arrange(series, release_date)
+
+# Create an ordered factor for film titles within each series
+series_films_plot <- series_films_plot %>%
+  group_by(series) %>%
+  arrange(release_date, .by_group = TRUE) %>%
+  mutate(title_ordered = fct_inorder(film)) %>%
+  ungroup()
+```
+
+```{r}
+# Rotten tomates Plot
+ggplot(series_films_plot, aes(x = series, y = rotten_tomatoes, fill = title_ordered)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.8)) +
+  labs(
+    title = "Rotten Tomatoes Scores by Pixar Film Series",
+    x = "Film Series",
+    y = "Rotten Tomatoes Score",
+    fill = "Film Title"
+  ) +
+  theme_minimal() +
+  theme(plot.margin = margin(t = 20, r = 10, b = 10, l = 10),
+  axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.text = element_text(size = 8))
+```
+
+The visual analysis of the rotten tomatoes score for the given pixar film series shows a striking pattern for all series. The first film of the series is always rated the best. For series with more than two titles (Cars and Toy Story) there is a mixed pattern. Cars was able to bounce back so to speak with a better rating in the third (last) film than in the second, while the toy story films progressively were rated worse (except for the second film being as good as the first).
 
 
 ## Exercise 4: Open Analysis (4 points)
