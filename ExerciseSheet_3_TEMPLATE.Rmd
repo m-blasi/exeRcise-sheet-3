@@ -151,6 +151,21 @@ c)  Load the `public_response` dataframe into R. Convert the
 public_response <- read.csv("public_response.csv")
 ```
 
+```{r}
+#Define cinema score levels in ascending order
+score_levels <- c("A-", "A", "A+")
+
+#Convert cinema_score to an ordered factor
+public_response$cinema_score <- factor(public_response$cinema_score,
+                                       levels = score_levels,
+                                       ordered = TRUE)
+```
+
+```{r}
+#Merge datasets by title (keep all pixar_films)
+pixar_combined <- merge(pixar_films, public_response, by = "film", all.x = TRUE)
+```
+
 
 d)  Choose one of the variables representing the public response and
     create a bar plot for the films belonging to a series. Here are the
@@ -166,6 +181,8 @@ d)  Choose one of the variables representing the public response and
 
     What do you notice when comparing the scores of the films in a
     series? Do you see any patterns?
+
+
 
 ## Exercise 4: Open Analysis (4 points)
 
