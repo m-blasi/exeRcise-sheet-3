@@ -57,12 +57,45 @@ Link:
 
 For small datasets like these adding them to git is not a problem.
 
+```{r}
+# Download the pixar_films dataset
+download.file(
+  url = "https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-03-11/pixar_films.csv",
+  destfile = "pixar_films.csv"
+)
+
+# Download the public_response dataset
+download.file(
+  url = "https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-03-11/public_response.csv",
+  destfile = "public_response.csv"
+)
+```
+
 a)  Load the `pixar_films` dataset into R. Clean the dataset by removing
     films without a title. Inspect the variable `film_rating`. What are
     the possible values and what do they mean? Create a factor variable
     for the film rating. Why is this appropriate?
 
-<!-- -->
+```{r}
+pixar_films <- read.csv("pixar_films.csv")
+```
+
+```{r}
+pixar_films <- subset(pixar_films, !is.na(film) & film != "")
+```
+
+```{r}
+table(pixar_films$film_rating)
+```
+
+The films in the dataset take rating values of "G" (General Audience), "PG" (Parental Guidance Suggested) and N/A (not an actual rating, most likely means the rating is missing). The rating is based on the Motion Picture Association (MPA) film rating system and has three further possible values: PG-13, R and NC-17.
+
+```{r}
+pixar_films$film_rating <- factor(pixar_films$film_rating)
+```
+
+Factor variables are used in R to represent categorical data. Film_rating is a categorical variable, as the ratings are categories and not metric values.
+
 
 b)  Inspect the film titles manually. Which films form a film series? A
     film series can be identified by a common word in the titles of the
@@ -76,6 +109,11 @@ c)  Load the `public_response` dataframe into R. Convert the
     levels are defined in ascending order, from the lowest to the
     highest score. Combine `public_response` with the `pixar_films`
     dataset using an appropriate merge variable.
+
+```{r}
+public_response <- read.csv("public_response.csv")
+```
+
 
 d)  Choose one of the variables representing the public response and
     create a bar plot for the films belonging to a series. Here are the
